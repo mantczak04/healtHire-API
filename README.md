@@ -16,6 +16,7 @@ healtHire-API is a REST API for a medical industry job board. It's made to help 
 - `Java`
 - `Spring Boot`
 - `PostgreSQL`
+- `Hibernate`
 - `Maven`
 
 ### Usage
