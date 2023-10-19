@@ -21,5 +21,6 @@ healtHire-API is a REST API for a medical industry job board. It's made to help 
 
 ### Usage
 
+- Create database called 'healthire' in PostgreSQL (e.g using pgAdmin 4) 
 - Navigate to the `src/main/java/pl/ant/healthire` directory.
 - Run HealthireApplication.java to start the backend server application on port 8080.
