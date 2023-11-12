@@ -27,11 +27,7 @@ public class OfferController {
         return new ResponseEntity<>(offerService.createOffer(offerDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/filtered")
-    public ResponseEntity<List<OfferDto>> getAllByCity(
-            @RequestParam(value = "city", required = false) String city){
-        return ResponseEntity.ok(offerService.getAllByCity(city));
-    }
+
 
     @GetMapping()
     public ResponseEntity<List<OfferDto>> getAllOffers(){
@@ -54,5 +50,34 @@ public class OfferController {
         offerService.deleteOfferById(offerId);
         return new ResponseEntity<>("Offer deleted successfully", HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<OfferDto>> searchOffersByTitle(
+            @RequestParam(value="query", required = true) String query){
+        return ResponseEntity.ok(offerService.searchOffersByTitle(query));
+    }
+
+    @GetMapping("/salary")
+    public ResponseEntity<List<OfferDto>> searchOffersBySalaryRange(
+            @RequestParam(value = "minSalary") Integer minSalary,
+            @RequestParam(value = "maxSalary", required = false) Integer maxSalary){
+        return ResponseEntity.ok(offerService.searchOffersBySalaryRange(minSalary, maxSalary));
+    }
+
+    @GetMapping("/city")
+    public ResponseEntity<List<OfferDto>> getAllByCity(
+            @RequestParam(value = "city", required = false) String city){
+        return ResponseEntity.ok(offerService.getAllByCity(city));
+    }
+
+    @GetMapping("/filtered")
+    public ResponseEntity<List<OfferDto>> getAllByFilters(
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "minSalary", required = false) Integer minSalary,
+            @RequestParam(value = "maxSalary", required = false) Integer maxSalary
+    ){
+        return ResponseEntity.ok(offerService.searchOffersByCityAndSalaryRange(city, minSalary, maxSalary));
+    }
+
 
 }

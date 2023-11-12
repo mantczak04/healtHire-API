@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -46,5 +47,7 @@ public class Offer {
     @Column(name = "expiration_date")
     private Date expirationDate;
 
-
+    @Column(name = "views")
+    @Value("0")
+    private int views;
 }

@@ -3,7 +3,6 @@ package pl.ant.healthire.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.ant.healthire.payload.NonDetailedOffer;
-import pl.ant.healthire.payload.OfferDto;
 import pl.ant.healthire.services.OfferService;
 
 import java.util.List;
@@ -26,7 +25,9 @@ public class HomepageController {
 
     @GetMapping("/filtered")
     public ResponseEntity<List<NonDetailedOffer>> getAllByCity(
-            @RequestParam(value = "city", required = false) String city){
-        return ResponseEntity.ok(offerService.getAllNonDetailedOffersByCity(city));
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "minSalary", defaultValue = "0", required = false) Integer minSalary,
+            @RequestParam(value = "maxSalary", defaultValue = "2147483647", required = false) Integer maxSalary){
+        return ResponseEntity.ok(offerService.searchNonDetailedOffersByCityAndSalaryRange(city, minSalary, maxSalary));
     }
 }

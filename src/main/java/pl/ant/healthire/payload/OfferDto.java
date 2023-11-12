@@ -20,6 +20,7 @@ public class OfferDto {
     private Level level;
     //private Long enterpriseId;
 
+    private int views;
     private Long officeId;
 
     @JsonIgnore

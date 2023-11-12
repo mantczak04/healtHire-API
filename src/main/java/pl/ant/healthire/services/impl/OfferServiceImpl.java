@@ -60,6 +60,7 @@ public class OfferServiceImpl implements OfferService {
         Offer offer = offerRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Offer", "id", id)
         );
+        offerRepository.incrementViewsByOfferId(id);
         return mapper.map(offer, OfferDto.class);
     }
 
@@ -101,12 +102,39 @@ public class OfferServiceImpl implements OfferService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
-    public List<NonDetailedOffer> getAllNonDetailedOffersByCity(String city) {
-        List<Offer> offers = offerRepository.getAllByCity(city);
+    public List<OfferDto> searchOffersByTitle(String query) {
+        List<Offer> offers = offerRepository.searchOffersByTitle(query);
+        return offers.stream().map((offer) -> mapToDto(offer))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OfferDto> searchOffersBySalaryRange(Integer minSalary, Integer maxSalary) {
+        if(maxSalary==null) maxSalary=2147483647;
+        if(minSalary==null) minSalary=0;
+        List<Offer> offers = offerRepository.searchOffersBySalaryRange(minSalary, maxSalary);
+        return offers.stream().map((offer) -> mapToDto(offer))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OfferDto> searchOffersByCityAndSalaryRange(String city, Integer minSalary, Integer maxSalary) {
+        if(maxSalary==null) maxSalary=2147483647;
+        if(minSalary==null) minSalary=0;
+        List<Offer> offers = offerRepository.searchOffersByCityAndSalaryRange(city,minSalary,maxSalary);
+        return offers.stream().map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<NonDetailedOffer> searchNonDetailedOffersByCityAndSalaryRange(String city, Integer minSalary, Integer maxSalary) {
+        List<Offer> offers = offerRepository.searchOffersByCityAndSalaryRange(city,minSalary,maxSalary);
         return offers.stream().map(this::mapOfferToNonDetailedOffer)
                 .collect(Collectors.toList());
     }
+
 
     private NonDetailedOffer mapOfferToNonDetailedOffer(Offer offer){
         NonDetailedOffer nonDetailedOffer = new NonDetailedOffer();
@@ -126,6 +154,7 @@ public class OfferServiceImpl implements OfferService {
         offerDto.setSalary(offer.getSalary());
         offerDto.setCreationDate(offer.getCreationDate());
         offerDto.setOfficeId(offer.getOffice().getId());
+        offerDto.setViews(offer.getViews());
 
         return offerDto;
     }

@@ -1,6 +1,5 @@
 package pl.ant.healthire.services;
 
-import pl.ant.healthire.entities.Offer;
 import pl.ant.healthire.payload.NonDetailedOffer;
 import pl.ant.healthire.payload.OfferDto;
 
@@ -21,5 +20,15 @@ public interface OfferService {
 
     List<OfferDto> getAllByCity(String city);
 
-    List<NonDetailedOffer> getAllNonDetailedOffersByCity(String city);
+
+    List<OfferDto> searchOffersByTitle(String query);
+
+    List<OfferDto> searchOffersBySalaryRange(Integer minSalary, Integer maxSalary);
+
+    List<OfferDto> searchOffersByCityAndSalaryRange(String city, Integer minSalary, Integer maxSalary);
+
+    List<NonDetailedOffer> searchNonDetailedOffersByCityAndSalaryRange(String city,
+                                                                       Integer minSalary,
+                                                                       Integer maxSalary);
+
 }
