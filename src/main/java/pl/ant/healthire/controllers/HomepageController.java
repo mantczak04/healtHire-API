@@ -25,7 +25,7 @@ public class HomepageController {
 
     @GetMapping("/filtered")
     public ResponseEntity<List<NonDetailedOffer>> getAllByCity(
-            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "city", defaultValue = "%%", required = false) String city,
             @RequestParam(value = "minSalary", defaultValue = "0", required = false) Integer minSalary,
             @RequestParam(value = "maxSalary", defaultValue = "2147483647", required = false) Integer maxSalary){
         return ResponseEntity.ok(offerService.searchNonDetailedOffersByCityAndSalaryRange(city, minSalary, maxSalary));

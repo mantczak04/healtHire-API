@@ -26,8 +26,11 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query("UPDATE Offer o SET o.views = o.views + 1 WHERE o.id = :id")
     void incrementViewsByOfferId(@Param("id") Long id);
 
-    @Query("SELECT o FROM Offer o JOIN o.office e WHERE e.city=:city" +
-            " AND o.salary BETWEEN :minSalary AND :maxSalary")
+    @Query( "SELECT o " +
+            "FROM Offer o " +
+            "JOIN o.office e " +
+            "WHERE e.city LIKE :city " +
+            "AND o.salary BETWEEN :minSalary AND :maxSalary")
     List<Offer> searchOffersByCityAndSalaryRange(
             @Param("city") String city,
             @Param("minSalary") Integer minSalary,

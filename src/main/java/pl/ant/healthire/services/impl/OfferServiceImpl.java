@@ -130,6 +130,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<NonDetailedOffer> searchNonDetailedOffersByCityAndSalaryRange(String city, Integer minSalary, Integer maxSalary) {
+        System.out.println(city.toString());
         List<Offer> offers = offerRepository.searchOffersByCityAndSalaryRange(city,minSalary,maxSalary);
         return offers.stream().map(this::mapOfferToNonDetailedOffer)
                 .collect(Collectors.toList());
